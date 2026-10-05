@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>formValidation</title>
+    <style>
+      form {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+      }
+
+      label {
+        margin-top: 10px;
+      }
+
+      input {
+        margin-bottom: 5px;
+      }
+
+      span {
+        color: red;
+        font-size: 12px;
+      }
+    </style>
+</head>
+<body>
+    <form action="" onsubmit="return validateForm()">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" oninput="clearWarnings()"><span id="dataWarningName"></span>
+        <br><br>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" oninput="clearWarnings()"><span id="dataWarningEmail"></span>
+        <br><br>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" oninput="clearWarnings()"><span id="dataWarningPassword"></span>
+        <br><br>
+        <label for="confirm password">Confirm Password</label>
+        <input type="password" name="confirm password" id="confirm password" oninput="clearWarnings()"><span id="dataWarningConfirmPassword"></span>
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        function clearWarnings() {
+            document.getElementById("dataWarningName").innerText = "";
+            document.getElementById("dataWarningEmail").innerText = "";
+            document.getElementById("dataWarningPassword").innerText = "";
+            document.getElementById("dataWarningConfirmPassword").innerText = "";
+        }
+
+        function validateForm() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirm password").value;
+            const spanName = document.getElementById("dataWarningName");
+            const spanEmail = document.getElementById("dataWarningEmail");
+            const spanPassword = document.getElementById("dataWarningPassword");
+            const spanConfirmPassword = document.getElementById("dataWarningConfirmPassword");
+
+            if(name.trim() === ""){
+                spanName.innerText = "Name is required";
+                return false;
+            }
+            if(email.trim() === ""){
+                spanEmail.innerText = "Email is required";
+                return false;
+            }
+            if(password.trim() === ""){
+                spanPassword.innerText = "Password is required";
+                return false;
+            }
+             if(!/[A-Z]/.test(password)){
+                spanPassword.innerText = "Atleast one uppercase letter required";
+                return false;
+            }
+             if(!/[a-z]/.test(password)){
+                spanPassword.innerText = "Atleast one lowercase letter required";
+                return false;
+            }
+             if(!/[0-9]/.test(password)){
+                spanPassword.innerText = "Atleast one number required";
+                return false;
+            }
+             if(!/[@#$&*]/.test(password)){
+                spanPassword.innerText = "Atleast one special character required";
+                return false;
+            }
+            if(confirmPassword.trim() === ""){
+                spanConfirmPassword.innerText = "Please Re-enter the password";
+                return false;
+            }
+            if(confirmPassword.trim() !== ""){
+                if(confirmPassword !== password){
+                    spanConfirmPassword.innerText = "You have entered Wrong Password";
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+            
+            return true;
+        }
+
+    </script>
+</body>
+</html>
